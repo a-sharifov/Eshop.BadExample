@@ -1,0 +1,92 @@
+version: '3.4'
+
+services:
+  eshop.mvc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=7195
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+      - 7195:443
+      - 5272:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/data_protection_keys:/root/.aspnet/DataProtection-Keys
+   
+  eshop.servicescart.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=7162
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+      - 7162:443
+      - 5221:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/data_protection_keys:/root/.aspnet/DataProtection-Keys
+
+  eshop.services.identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=7222
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+      - 7222:443
+      - 5000:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/data_protection_keys:/root/.aspnet/DataProtection-Keys
+
+  #eshop.servicesproduct.api:
+  #  environment:
+  #    - ASPNETCORE_ENVIRONMENT=Docker
+  #    - ASPNETCORE_URLS=https://+:443;http://+:80
+  #    - ASPNETCORE_HTTPS_PORT=7144
+  #    - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+  #    - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+  #  ports:
+  #    - 7144:443
+  #    - 5259:80
+  #  volumes:
+  #    - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  #    - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  #    - ${APPDATA}/data_protection_keys:/root/.aspnet/DataProtection-Keys
+
+  eshop.servicescoupon.api:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Docker
+     - ASPNETCORE_URLS=https://+:443;http://+:80
+     - ASPNETCORE_HTTPS_PORT=7144
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+     - 7181:443
+     - 5196:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/data_protection_keys:/root/.aspnet/DataProtection-Keys
+
+  eshop.servicesproduct.api:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Docker
+     - ASPNETCORE_URLS=https://+:443;http://+:80
+     - ASPNETCORE_HTTPS_PORT=7144
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+     - 7144:443
+     - 5259:80
+    volumes:
+     - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+     - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+     - ${APPDATA}/data_protection_keys:/root/.aspnet/DataProtection-Keys

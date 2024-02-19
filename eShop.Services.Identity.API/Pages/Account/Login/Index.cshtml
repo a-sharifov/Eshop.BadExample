@@ -1,0 +1,70 @@
+﻿@page
+@model eShop.Pages.Login.Index
+
+<div class="login-page">
+
+    <partial name="_ValidationSummary" />
+
+    <div class="row">
+
+        @if (Model.View.EnableLocalLogin)
+        {
+            <div class="col-sm-12 col-lg-6 offset-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Login</h2>
+                    </div>
+
+                    <div class="card-body">
+                        <form asp-page="/Account/Login/Index">
+                            <input type="hidden" asp-for="Input.ReturnUrl" />
+
+                            <div class="form-group">
+                                <label asp-for="Input.Username"></label>
+                                <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Password"></label>
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
+                            </div>  
+
+                            @if (Model.View.AllowRememberLogin)
+                            {
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="Input.RememberLogin">
+                                        <label class="form-check-label" asp-for="Input.RememberLogin">
+                                            Remember My Login
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+
+                            <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
+                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
+                        </form>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-page="../Register/StandartRegister/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">
+                            Register
+                        </a><br />
+
+                        <div class="d-flex justify-content-center mt-3">
+                            <a asp-route-scheme="Discord" asp-route-returnUrl="@Model.Input.ReturnUrl" asp-page="/ExternalLogin/Challenge" class="btn btn-dark btn-circle mx-2">
+                                <i class="fa-brands fa-discord"></i>
+                            </a>
+                            <a asp-route-scheme="Google" asp-route-returnUrl="@Model.Input.ReturnUrl" asp-page="/ExternalLogin/Challenge" class="btn btn-dark btn-circle mx-2">
+                                <i class="fa-brands fa-google"></i>
+                            </a>
+                            <a asp-route-scheme="GitLab" asp-route-returnUrl="@Model.Input.ReturnUrl" asp-page="/ExternalLogin/Challenge" class="btn btn-dark btn-circle mx-2">
+                                <i class="fa-brands fa-gitlab"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

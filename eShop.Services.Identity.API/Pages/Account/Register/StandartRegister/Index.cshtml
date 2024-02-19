@@ -1,0 +1,65 @@
+﻿@page
+@using eShop.Services.Identity.API;
+@model eShop.Services.Identity.API.Pages.Account.Register.StandartRegister.IndexModel;
+@{  
+}
+
+
+<div>
+    <partial name="_ValidationSummary" />
+    <div class="row">
+        <div class="col-sm-12 col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Register</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="Input.ReturnUrl" />
+                        <div class="form-group">
+                            <label asp-for="Input.UserName"></label>
+                            <input class="form-control" placeholder="name" asp-for="Input.UserName" />
+                            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.FirstName"></label>
+                            <input class="form-control" placeholder="first_name" asp-for="Input.FirstName" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.LastName"></label>
+                            <input class="form-control" placeholder="last_name" asp-for="Input.LastName" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Email"></label>
+                            <input class="form-control" placeholder="Email" asp-for="Input.Email" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Password"></label>
+                            <input type="password" class="form-control" placeholder="password" asp-for="Input.Password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.ConfirmPassword"></label>
+                            <input type="password" class="form-control" placeholder="password" asp-for="Input.ConfirmPassword" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.RoleName"></label>
+                            <select asp-for="Input.RoleName" class="form-control"
+                                    asp-items="@(new SelectList(typeof(SD.Role).GetEnumNames()))"></select>
+                            <span asp-validation-for="Input.RoleName" class="text-danger"></span>
+                        </div>
+
+                        <button class="btn btn-primary" name="button" value="register">Register</button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <a asp-page="../../Login/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

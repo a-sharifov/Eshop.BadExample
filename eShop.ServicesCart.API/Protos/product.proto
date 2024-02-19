@@ -1,0 +1,104 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "eShop.ServicesCart.API.Protos.Product";
+
+package product;
+import "google/protobuf/wrappers.proto";
+
+service DefaultProductService {
+    rpc GetProduct (IdProductRequest) returns (ProductDto); 
+    rpc GetProductsByIds (IdProductsRequest) returns (ProductsDto); 
+    rpc GetProductsByFilter(FilterRequest) returns (stream ProductDto);
+    rpc GetProductsLengthByFilter(FilterRequest) returns (LengthResponse);
+    rpc AddProduct(ProductDto) returns (ProductDto);
+    rpc UpdateProduct(ProductDto) returns (CountChangeResponse);
+    rpc DeleteProduct(IdRequest) returns (CountChangeResponse);
+    rpc GetAllBrand(Empty) returns (stream ProductBrandDto);
+    rpc DeleteBrand(IdRequest) returns (CountChangeResponse);
+    rpc GetBrandDescription(IdRequest) returns (BrandDescriptionResponse);
+    rpc GetAllType(Empty) returns (stream ProductTypeDto);
+    rpc DeleteType(IdRequest) returns (CountChangeResponse);
+    rpc AddProductBrand(ProductBrandDto) returns (ProductBrandDto);
+    rpc AddProductType(ProductTypeDto) returns (ProductTypeDto);
+}
+
+//нету id ProductBrandDto и  ProductTypeDto так как внутри этих message он есть
+message ProductDto {
+    int32 id = 1;
+    double price = 2;
+    google.protobuf.StringValue name = 3;
+    google.protobuf.StringValue description = 4;
+    google.protobuf.StringValue image_url = 5;
+    ProductTypeDto product_type_dto = 6;
+    ProductBrandDto product_brand_dto = 7;
+    ProductSellerDto product_seller_dto = 8;
+    google.protobuf.StringValue composition = 9;
+}
+
+
+message ProductsDto {
+    repeated ProductDto products = 1;
+}
+
+message IdProductsRequest {
+    repeated int32 ids = 1;
+    google.protobuf.StringValue include_tables = 5;
+    google.protobuf.StringValue include_fields = 6;
+}
+
+message ProductSellerDto {
+    int32 id = 1;
+    google.protobuf.StringValue seller = 2;
+}
+
+message ProductTypeDto {
+    int32 id = 1;
+    google.protobuf.StringValue type = 2;
+}
+
+message ProductBrandDto {
+    int32 id = 1;
+    google.protobuf.StringValue brand = 2;
+}
+
+message Empty {
+
+}
+
+message IdRequest {
+	int32 id = 1;
+}
+
+message BrandNameRequest {
+    string name = 1;
+}
+
+message IdProductRequest {
+	int32 id = 1;
+    google.protobuf.StringValue include_tables = 2;
+}
+
+message FilterRequest {
+    int32 skip = 1;
+    int32 take = 2;
+    double min_price = 3;
+    double max_price = 4;
+    google.protobuf.StringValue include_tables = 5;
+    google.protobuf.StringValue include_fields = 6;
+    google.protobuf.StringValue product_type = 7;
+    google.protobuf.StringValue product_brand = 8;
+    google.protobuf.StringValue product_name = 9;
+    google.protobuf.StringValue product_seller = 10;
+}
+
+message BrandDescriptionResponse {
+    google.protobuf.StringValue description = 3;  
+}
+
+message CountChangeResponse {
+    int32 count = 1;
+}
+
+message LengthResponse {
+	int32 length = 1;
+}

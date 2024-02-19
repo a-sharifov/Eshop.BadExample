@@ -1,0 +1,38 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "eShop.ServicesCoupon.API.Protos.Coupon";
+
+package product;
+
+service DefaultCouponService {
+	rpc GetCoupon(CouponCodeRequest) returns (CouponDto);
+	rpc GetCoupons(Empty) returns (CouponsDto);
+	rpc CreateCoupon(CouponDto) returns (CreateCouponResponse);
+	rpc DeleteCoupon(CouponCodeRequest) returns (DeleteCouponResponse);
+}
+
+message Empty {
+
+}
+
+message CouponCodeRequest {
+	string coupon_code = 1;
+}
+
+message CouponDto {
+	int32 id = 1;
+	string coupon_code = 2;
+	double discount = 3;
+}
+
+message CouponsDto {
+	repeated CouponDto coupons = 1;
+}
+
+message DeleteCouponResponse {
+    bool is_deleted = 1;
+}
+
+message CreateCouponResponse {
+	bool is_created = 1;
+}

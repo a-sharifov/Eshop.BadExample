@@ -1,0 +1,64 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "ProductDetails";
+}
+
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="main-img">
+            <img class="img-fluid" src="@Model.ImageUrl" alt="Products">
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="main-description px-2">
+            <div class="category text-bold">
+                Type: @Model.ProductType.Type
+            </div>
+            <div class="product-title text-bold my-3">
+                Brand: @Model.ProductBrand.Brand
+            </div>
+            <div class="price-area my-4">
+                <p class="text-bold mb-1">Price: $@Model.Price.ToString("c")</p>
+            </div>
+            <form asp-controller="Cart"
+                  asp-action="AddProduct">
+                <input name="productId" asp-for="Id" hidden />
+                <div class="buttons d-flex my-5">
+                    <span class="input-group-text border-0 pl-2 btn-transparent icon-hv-sc-25">
+                        <button type="submit" class="fa-solid fa-cart-shopping"></button>
+                    </span>
+                    <div class="block quantity">
+                        <input name="quantity" type="number" class="form-control" id="cart_quantity" min="1" max="99" placeholder="count">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="product-details my-4">
+            <p class="details-title text-color mb-1">Seller</p>
+            <p class="description">
+                @Model.ProductSeller.Seller
+            </p>
+        </div>
+        <div class="product-details my-4">
+            <p class="details-title text-color mb-1">Details</p>
+            <p class="description">
+                @Model.Description
+            </p>
+        </div>
+        <div class="product-details my-4">
+            <p class="details-title text-color mb-2">Composition</p>
+            <ul>
+                @if (Model.Composition != null)
+                {
+                    @foreach (var item in Model.Composition.Split(','))
+                    {
+                        <li>@item</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

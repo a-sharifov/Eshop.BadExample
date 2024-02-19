@@ -1,0 +1,137 @@
+version: '3.4'
+
+# env добавить в другой файл
+# нужно вместо user secret использовать env
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/apps/redis/data:/data
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    volumes:
+      - ~/apps/elasticsearch/data:/usr/share/elasticsearch/data
+    networks:
+      - elastic_network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.1
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    networks:
+      - elastic_network
+    depends_on:
+      - elasticsearch
+    
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    volumes:
+    - ~/apps/mssql/data:/var/opt/mssql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=mssql1Ipw
+      - MSSQL_DB=productDb
+      - MSSQL_USER=sa
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=coupon
+      - POSTGRES_USER=akbar
+      - POSTGRES_PASSWORD=akbar2004
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: akber
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ~/apps/mongo/data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: akber
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: mongo
+    depends_on:
+      - mongo
+
+  eshop.mvc:
+    image: ${DOCKER_REGISTRY-}eshopmvc
+    build:
+      context: .
+      dockerfile: eShop.MVC/Dockerfile
+    depends_on:
+        - eshop.servicescart.api
+        - eshop.services.identity.api
+        - eshop.servicesproduct.api
+
+  eshop.servicescart.api:
+    image: ${DOCKER_REGISTRY-}eshopservicescartapi
+    build:
+      context: .
+      dockerfile: eShop.ServicesCart.API/Dockerfile
+    depends_on:
+        - eshop.services.identity.api
+        - redis
+        - mongo
+
+  eshop.services.identity.api:
+    image: ${DOCKER_REGISTRY-}eshopservicesidentityapi
+    build:
+      context: .
+      dockerfile: eShop.Services.Identity.API/Dockerfile
+    depends_on:
+        - mssql
+
+  eshop.servicesproduct.api:
+    image: ${DOCKER_REGISTRY-}eshopservicesproductapi
+    build:
+      context: .
+      dockerfile: eShop.Services.Product.API/Dockerfile
+    depends_on:
+       - mssql
+       - elasticsearch
+       - kibana
+       - eshop.services.identity.api 
+
+  eshop.servicescoupon.api:
+    image: ${DOCKER_REGISTRY-}eshopservicescouponapi
+    build:
+      context: .
+      dockerfile: eShop.ServicesCoupon.API/Dockerfile
+    depends_on:
+       - postgres
+
+networks:
+  elastic_network:
+    driver: bridge
+
+volumes:
+   postgres_data:
+
+

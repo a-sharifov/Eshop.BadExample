@@ -1,0 +1,94 @@
+﻿@model Cart
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+@if (Model != null)
+{
+    <br />
+    <br />
+    <div class="container p-4 border">
+        <div class="row pb-2">
+            <div class="col">
+                <h1 class="text-primary black-text">Cart</h1>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Brand
+                    </th>
+                    <th>
+                        Seller
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.CartProducts)
+                {
+                    <tr>
+                        <td>
+                            @product.ProductName
+                        </td>
+                        <td>
+                            @product.ProductBrand
+                        </td>
+                        <td>
+                            @product.ProductSeller
+                        </td>
+                        <td>
+                            @((product.Price).ToString("c"))
+                        </td>
+                        <td>
+                            @product.Quantity
+                        </td>
+                        <td>
+                            <a class="btn btn-success"
+                               asp-controller="Home"
+                               asp-action="ProductDetails"
+                               asp-route-productId="@product.ProductId">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </a>
+                            <a class="btn btn-danger"
+                               asp-action="DeleteProductByIndex"
+                               asp-route-objectId="@product.ObjectId">
+                                <i class="fas fa-trash"></i>
+                                @if(product.ObjectId != null)
+                                {
+                                    Console.WriteLine(product.ObjectId);
+                                }
+                            </a>
+                        </td>
+                        <th></th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+      @*  <div class="col-5">
+            <a asp-action="ProductsDelete" class="btn btn-danger fas fa-trash"></a>
+        </div>
+        <div class="col-5">
+            <input type="submit" value="Create" class="btn btn-success form-control fa-solid fa-cart-shopping" />
+        </div>*@
+    </div>
+}
+else
+{
+    <tr>
+        <td colspan="6">
+            <h3 class="text-center">No products in cart</h3>
+        </td>
+    </tr>
+}

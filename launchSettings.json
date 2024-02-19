@@ -1,0 +1,40 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "eshop.servicesproduct.api": "StartWithoutDebugging",
+        "eshop.mvc": "StartWithoutDebugging",
+        "eshop.servicescart.api": "StartWithoutDebugging",
+        "eshop.services.identity.api": "StartWithoutDebugging",
+        "elasticsearch": "StartWithoutDebugging",
+        "kibana": "StartWithoutDebugging",
+        "mongo": "StartWithoutDebugging",
+        "mssql": "StartWithoutDebugging",
+        "redis": "StartWithoutDebugging",
+        "mongo-express": "StartWithoutDebugging",
+        "postgres": "StartWithoutDebugging",
+        "eshop.servicescoupon.api": "StartWithoutDebugging"
+      }
+    },
+    "db": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "elasticsearch": "StartWithoutDebugging",
+        "eshop.mvc": "StartDebugging",
+        "eshop.services.identity.api": "StartDebugging",
+        "eshop.servicescart.api": "StartDebugging",
+        "eshop.servicescoupon.api": "StartWithoutDebugging",
+        "eshop.servicesproduct.api": "StartDebugging",
+        "kibana": "StartWithoutDebugging",
+        "mongo": "StartWithoutDebugging",
+        "mongo-express": "StartWithoutDebugging",
+        "mssql": "StartWithoutDebugging",
+        "postgres": "StartWithoutDebugging",
+        "redis": "StartWithoutDebugging"
+      }
+    }
+  }
+}

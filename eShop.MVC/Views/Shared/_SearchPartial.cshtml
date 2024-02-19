@@ -1,0 +1,17 @@
+﻿@using eShop.MVC.Constants;
+
+<form method="get"
+      asp-action="Index" 
+      asp-controller="Home"
+      class="d-flex flex-grow-1">
+    <input name="ProductName"
+           type="search"
+           class="form-control rounded"
+           placeholder="Search"
+           aria-label="Search"
+           aria-describedby="search-addon" 
+           value="@ViewData[FilterRequestFindConstants.ProductName]" />
+    <span class="input-group-text border-0 pl-2 btn-transparent icon-hv-sc-25" id="search-addon">
+        <button class="fas fa-search btn-transparent" type="submit"></button>
+    </span>
+</form>
